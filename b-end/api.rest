@@ -1,0 +1,29 @@
+@BASE_URL=http://localhost:3000
+
+###
+
+GET {{BASE_URL}} HTTP/1.1
+
+###
+
+POST {{BASE_URL}}/upload/dry-run HTTP/1.1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="image-to-upload.svg"
+Content-Type: image/svg+xml
+
+< ./assets/image-to-upload.svg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+
+POST {{BASE_URL}}/upload HTTP/1.1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="image-to-upload.svg"
+Content-Type: image/svg+xml
+
+< ./assets/image-to-upload.svg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
