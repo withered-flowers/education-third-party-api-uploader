@@ -5,6 +5,9 @@ import express from "express";
 import { middlewareUpload } from "./utils/multer.js";
 import { imagekit } from "./utils/imagekit.js";
 
+// import the API
+import { jokesApi } from "./api/jokes.js";
+
 // If not production, use dotenv
 if (process.env.NODE_ENV !== "production") {
   dotenv.config();
@@ -24,6 +27,33 @@ app.get("/", (req, res) => {
     statusCode: 200,
     message: "Pong !",
   });
+});
+
+app.get("/jokes", async (req, res, next) => {
+  try {
+    // TODO: Get the jokes from the third party API
+
+    // We will use axios instance (jokesApi) to fetch the data
+    // using the get method to /Programming endpoint
+    const { data } = await jokesApi.get("/Programming", {
+      // This is the query parameters that we need to pass to the API
+      // https://v2.jokeapi.dev/joke/Programming?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=twopart&amount=10
+      params: {
+        blacklistFlags: "nsfw,religious,political,racist,sexist,explicit",
+        type: "twopart",
+        amount: 10,
+      },
+    });
+
+    console.log(JSON.stringify(data, null, 2));
+
+    res.status(200).json({
+      statusCode: 200,
+      data,
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 
 // Include middlewareUpload as a middleware

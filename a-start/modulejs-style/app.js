@@ -17,6 +17,14 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/jokes", async (req, res, next) => {
+  try {
+    // TODO: Get the jokes from the third party API
+  } catch (err) {
+    next(err);
+  }
+});
+
 app.post("/upload", async (req, res, next) => {
   try {
     // TODO: Upload the file and return the result
